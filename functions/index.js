@@ -9,6 +9,7 @@ const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
 const db = admin.database();
+const firestore = admin.firestore();
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.json());
@@ -42,9 +43,21 @@ app.post('/get', async (req, res) => {
     }else {
         resp="sam tig long"
     }
-     
-    
+         
     res.json(data_get);
+});
+
+app.post('/insert', async (req, res) => {    
+    input = req.body;
+
+    if(input.key === "Kuy_Parin"){
+        await firestore.collection('parin2').add(input);
+        resp="update_complete";
+    }else {
+        resp="sam tig long";
+    }
+    
+    res.json({"msg":resp});
 });
 
 
