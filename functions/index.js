@@ -44,7 +44,7 @@ app.post('/get', async (req, res) => {
         resp="sam tig long"
     }
          
-    res.json(data_get);
+    res.json(resp);
 });
 
 app.post('/insert', async (req, res) => {    
