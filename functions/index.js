@@ -14,17 +14,17 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.json());
 app.use(cors())
 
-var ref = db.ref("parin");
+var parin = db.ref("parin");
 
 app.get('/test_function', (req, res) => {
     res.json({"msg":"KUY PARIN"});
 });
 
-app.post('/push', (req, res) => {    
+app.post('/push', async (req, res) => {    
     input = req.body;
 
     if(input.key === "Kuy_Parin"){
-        ins=ref.push(input);
+        ins= await parin.push(input);
         resp="update_complete"
     }else {
         resp="sam tig long"
@@ -33,17 +33,18 @@ app.post('/push', (req, res) => {
     res.json({"msg":resp});
 });
 
-app.post('/get', (req, res) => {
+app.post('/get', async (req, res) => {
     input = req.body;
 
-    if(input.key === "Kuy_Parin"){
-        data_get =ref.get();
+     if(input.key === "Kuy_Parin"){
+        data_get = await parin.get()
         resp=data_get 
     }else {
         resp="sam tig long"
     }
+     
     
-    res.json(resp);
+    res.json(data_get);
 });
 
 
